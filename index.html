@@ -3,10 +3,114 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Odin Library</title>
+    <title>The Odin Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
+    <script src="//code.iconify.design/1/1.0.6/iconify.min.js"></script>
   </head>
   <body>
+    <div class="container">
+      <header class="header">
+        <div class="header__logo">
+          <h1 class="header__logo-text">
+            The <br />
+            Odin <br />
+            Library
+          </h1>
+        </div>
+        <div class="header__search">
+          <input
+            type="text"
+            placeholder=" Search"
+            class="header__search-input"
+          />
+          <span
+            class="iconify header__search-icon"
+            data-icon="mdi:search"
+          ></span>
+        </div>
+        <div class="header__action">
+          <button id="open-modal-btn" class="header__action-add-btn">
+            Add <br />
+            Book
+          </button>
+        </div>
+      </header>
+      <main class="main">
+        <h2 class="main__title">Lists Books</h2>
+        <div id="lists-books" class="main__card-container"></div>
+      </main>
+
+      <dialog id="demo-modal" class="modal">
+        <div class="modal__top">
+          <h2 class="modal__title">Add a new Book</h2>
+          <button id="close-modal-btn" class="modal__close">&times;</button>
+        </div>
+        <hr />
+        <form action="#">
+          <div class="modal__form">
+            <div class="modal__form-group">
+              <label class="modal__form-group-label" for="title">Title</label>
+              <input
+                class="modal__form-group-input"
+                type="text"
+                id="title"
+                name="title"
+              />
+            </div>
+            <div class="modal__form-group">
+              <label class="modal__form-group-label" for="author">Author</label>
+              <input
+                class="modal__form-group-input"
+                type="text"
+                id="author"
+                name="author"
+              />
+            </div>
+            <div class="modal__form-group">
+              <label class="modal__form-group-label" for="pages">Pages</label>
+              <input
+                class="modal__form-group-input"
+                type="number"
+                id="pages"
+                name="pages"
+              />
+            </div>
+            <div class="modal__form-group">
+              <label class="modal__form-group-label" for="url"
+                >Thumbnail URL</label
+              >
+              <input
+                class="modal__form-group-input"
+                type="url"
+                id="url"
+                name="url"
+              />
+            </div>
+            <div class="modal__form-group-checkbox">
+              <label class="modal__form-group-label" for="read"
+                >I have read this book</label
+              >
+              <input type="checkbox" id="read" name="read" />
+            </div>
+            <div class="modal__form-action">
+              <button type="submit" class="modal__form-action-submit">
+                Add to Library
+              </button>
+            </div>
+          </div>
+        </form>
+      </dialog>
+    </div>
+    <footer class="footer">
+      Made by <span class="iconify footer__icon" data-icon="mdi:github"></span>
+      <a class="footer__link" href="https://github.com/alviansyahrazak">Alvi</a>
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>
