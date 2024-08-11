@@ -25,6 +25,7 @@
         </div>
         <div class="header__search">
           <input
+            id="header-search-input"
             type="text"
             placeholder=" Search"
             class="header__search-input"
@@ -42,7 +43,9 @@
         </div>
       </header>
       <main class="main">
-        <h2 class="main__title">Lists Books</h2>
+        <div class="main__title-bg">
+          <h2 class="main__title">Lists Books</h2>
+        </div>
         <div id="lists-books" class="main__card-container"></div>
       </main>
 
@@ -52,7 +55,7 @@
           <button id="close-modal-btn" class="modal__close">&times;</button>
         </div>
         <hr />
-        <form action="#">
+        <form id="book-form">
           <div class="modal__form">
             <div class="modal__form-group">
               <label class="modal__form-group-label" for="title">Title</label>
@@ -61,6 +64,7 @@
                 type="text"
                 id="title"
                 name="title"
+                required
               />
             </div>
             <div class="modal__form-group">
@@ -70,6 +74,7 @@
                 type="text"
                 id="author"
                 name="author"
+                required
               />
             </div>
             <div class="modal__form-group">
@@ -79,24 +84,31 @@
                 type="number"
                 id="pages"
                 name="pages"
+                required
               />
             </div>
             <div class="modal__form-group">
-              <label class="modal__form-group-label" for="url"
+              <label class="modal__form-group-label" for="image"
                 >Thumbnail URL</label
               >
               <input
                 class="modal__form-group-input"
                 type="url"
-                id="url"
-                name="url"
+                id="image"
+                name="image"
+                required
               />
             </div>
             <div class="modal__form-group-checkbox">
               <label class="modal__form-group-label" for="read"
                 >I have read this book</label
               >
-              <input type="checkbox" id="read" name="read" />
+              <input
+                class="modal__form-group-input-checkbox"
+                type="checkbox"
+                id="read"
+                name="read"
+              />
             </div>
             <div class="modal__form-action">
               <button type="submit" class="modal__form-action-submit">
@@ -108,7 +120,11 @@
       </dialog>
     </div>
     <footer class="footer">
-      Made by <span class="iconify footer__icon" data-icon="mdi:github"></span>
+      Made by&nbsp;<span
+        class="iconify footer__icon"
+        data-icon="mdi:github"
+      ></span
+      >&nbsp;
       <a class="footer__link" href="https://github.com/alviansyahrazak">Alvi</a>
     </footer>
     <script src="script.js"></script>
