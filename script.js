@@ -1,20 +1,86 @@
-const myLibrary = [];
+// class Book
+class Book {
+  constructor(title, author, pages, read, image) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.image = image;
+  }
 
-// Constructor function for Book
-function Book(title, author, pages, read, image) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.image = image;
+  toggleReadStatus = () => {
+    this.read = !this.read;
+  };
 }
 
-// Toggle the read status of a book
-Book.prototype.toggleReadStatus = function () {
-  this.read = !this.read;
-};
+//class Library
+class Library {
+  constructor() {
+    this.books = [];
+  }
 
-// Sample books
+  addBook(book) {
+    this.books.push(book);
+    this.renderBooks();
+  }
+
+  readStatus(index) {
+    this.books[index].toggleReadStatus();
+    this.renderBooks();
+  }
+
+  deleteBook(index) {
+    this.books.splice(index, 1);
+    this.renderBooks();
+  }
+
+  searchBooks(e) {
+    const query = e.target.value.toLowerCase();
+    const filteredBooks = this.books.filter((book) =>
+      book.title.toLowerCase().includes(query),
+    );
+    this.renderBooks(filteredBooks);
+  }
+  renderBooks(library = this.books) {
+    const listsBooks = document.getElementById('lists-books');
+    const output = library
+      .map(
+        (item, index) => `
+        <div class="main__card">
+          <div class="main__card-image">
+            ${
+              item.read
+                ? `
+              <div class="main__card-read-tag">
+                <p class="main__card-read-tag-text">Read</p>
+              </div>`
+                : ''
+            }
+            <img src="${item.image}" alt="${
+          item.title
+        }" class="main__card-img" />
+          </div>
+          <div class="main__card-description">
+            <h3 class="main__card-description-title">${item.title}</h3>
+            <p class="main__card-description-author">${item.author}</p>
+          </div>
+          <div class="main__card-bottom">
+            <small class="main__card-bottom-text-pages">${
+              item.pages
+            } Pages</small>
+            <div class="main__card-actions">
+              <button class="main__card-action-read-btn" onclick="library.readStatus(${index})">Read</button>
+              <button class="main__card-action-delete-btn" onclick="library.deleteBook(${index})">Delete</button>
+            </div>
+          </div>
+        </div>`,
+      )
+      .join('');
+    listsBooks.innerHTML = output;
+  }
+}
+
+// sample books
 const books = [
   new Book(
     '윈드 브레이커 1 (Wind Breaker #1)',
@@ -86,62 +152,13 @@ const books = [
     false,
     'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1653283653i/60653006.jpg',
   ),
-
 ];
 
-myLibrary.push(...books);
+const library = new Library();
+books.forEach((book) => library.addBook(book));
 
-// Render books in the library
-function renderBooks(library = myLibrary) {
-  const listsBooks = document.getElementById('lists-books');
-  const output = library
-    .map(
-      (item, index) => `
-      <div class="main__card">
-        <div class="main__card-image">
-          ${
-            item.read
-              ? `
-            <div class="main__card-read-tag">
-              <p class="main__card-read-tag-text">Read</p>
-            </div>`
-              : ''
-          }
-          <img src="${item.image}" alt="${item.title}" class="main__card-img" />
-        </div>
-        <div class="main__card-description">
-          <h3 class="main__card-description-title">${item.title}</h3>
-          <p class="main__card-description-author">${item.author}</p>
-        </div>
-        <div class="main__card-bottom">
-          <small class="main__card-bottom-text-pages">${
-            item.pages
-          } Pages</small>
-          <div class="main__card-actions">
-            <button class="main__card-action-read-btn" onclick="readStatus(${index})">Read</button>
-            <button class="main__card-action-delete-btn" onclick="deleteBook(${index})">Delete</button>
-          </div>
-        </div>
-      </div>`,
-    )
-    .join('');
-  listsBooks.innerHTML = output;
-}
-
-// Toggle read status of a book
-function readStatus(index) {
-  myLibrary[index].toggleReadStatus();
-  renderBooks();
-}
-
-// Delete a book from the library
-function deleteBook(index) {
-  myLibrary.splice(index, 1);
-  renderBooks();
-}
-
-// Add a new book to the library
-function addBookLibrary(e) {
+// Event
+document.getElementById('book-form').addEventListener('submit', (e) => {
   e.preventDefault();
 
   const title = document.getElementById('title').value;
@@ -151,27 +168,16 @@ function addBookLibrary(e) {
   const read = document.getElementById('read').checked;
 
   const newBook = new Book(title, author, pages, read, image);
-  myLibrary.push(newBook);
+  library.addBook(newBook);
 
-  renderBooks();
   document.getElementById('demo-modal').close();
   document.getElementById('book-form').reset();
-}
+});
 
-// Search books by title
-function searchBooks(e) {
-  const query = e.target.value.toLowerCase();
-  const filteredBooks = myLibrary.filter((book) =>
-    book.title.toLowerCase().includes(query),
-  );
-  renderBooks(filteredBooks);
-}
-
-// Event listeners
-document.getElementById('book-form').addEventListener('submit', addBookLibrary);
+//Event
 document
   .getElementById('header-search-input')
-  .addEventListener('input', searchBooks);
+  .addEventListener('input', (e) => library.searchBooks(e));
 
 const modal = document.getElementById('demo-modal');
 document
@@ -182,4 +188,4 @@ document
   .addEventListener('click', () => modal.close());
 
 // Initial render
-renderBooks();
+library.renderBooks();
